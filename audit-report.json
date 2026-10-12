@@ -1,0 +1,663 @@
+{
+  "auditReportVersion": 2,
+  "vulnerabilities": {
+    "@istanbuljs/load-nyc-config": {
+      "name": "@istanbuljs/load-nyc-config",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "js-yaml"
+      ],
+      "effects": [
+        "babel-plugin-istanbul"
+      ],
+      "range": "*",
+      "nodes": [
+        "node_modules/@istanbuljs/load-nyc-config"
+      ],
+      "fixAvailable": {
+        "name": "jest",
+        "version": "25.0.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@jest/core": {
+      "name": "@jest/core",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@jest/reporters",
+        "@jest/transform",
+        "jest-config",
+        "jest-resolve-dependencies",
+        "jest-runner",
+        "jest-runtime",
+        "jest-snapshot"
+      ],
+      "effects": [
+        "jest",
+        "jest-cli"
+      ],
+      "range": ">=25.1.0",
+      "nodes": [
+        "node_modules/@jest/core"
+      ],
+      "fixAvailable": {
+        "name": "jest",
+        "version": "25.0.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@jest/expect": {
+      "name": "@jest/expect",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "jest-snapshot"
+      ],
+      "effects": [
+        "@jest/globals",
+        "jest-circus"
+      ],
+      "range": "*",
+      "nodes": [
+        "node_modules/@jest/expect"
+      ],
+      "fixAvailable": {
+        "name": "jest",
+        "version": "25.0.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@jest/globals": {
+      "name": "@jest/globals",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@jest/expect"
+      ],
+      "effects": [
+        "jest-runtime"
+      ],
+      "range": ">=28.0.0-alpha.0",
+      "nodes": [
+        "node_modules/@jest/globals"
+      ],
+      "fixAvailable": {
+        "name": "jest",
+        "version": "25.0.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@jest/reporters": {
+      "name": "@jest/reporters",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@jest/transform"
+      ],
+      "effects": [],
+      "range": ">=25.1.0",
+      "nodes": [
+        "node_modules/@jest/reporters"
+      ],
+      "fixAvailable": true
+    },
+    "@jest/transform": {
+      "name": "@jest/transform",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "babel-plugin-istanbul"
+      ],
+      "effects": [
+        "@jest/core",
+        "@jest/reporters",
+        "jest-runner",
+        "jest-runtime",
+        "jest-snapshot"
+      ],
+      "range": ">=25.1.0",
+      "nodes": [
+        "node_modules/@jest/transform"
+      ],
+      "fixAvailable": {
+        "name": "jest",
+        "version": "25.0.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@prisma/config": {
+      "name": "@prisma/config",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "deepmerge-ts",
+        "effect"
+      ],
+      "effects": [
+        "prisma"
+      ],
+      "range": "6.13.0-dev.1 - 8.1.0-dev.4",
+      "nodes": [
+        "node_modules/@prisma/config"
+      ],
+      "fixAvailable": true
+    },
+    "argparse": {
+      "name": "argparse",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "sprintf-js"
+      ],
+      "effects": [
+        "js-yaml"
+      ],
+      "range": "1.0.0 - 1.0.10",
+      "nodes": [
+        "node_modules/@istanbuljs/load-nyc-config/node_modules/argparse"
+      ],
+      "fixAvailable": {
+        "name": "jest",
+        "version": "25.0.0",
+        "isSemVerMajor": true
+      }
+    },
+    "babel-jest": {
+      "name": "babel-jest",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@jest/transform",
+        "babel-plugin-istanbul"
+      ],
+      "effects": [
+        "jest-config"
+      ],
+      "range": ">=25.1.0",
+      "nodes": [
+        "node_modules/babel-jest"
+      ],
+      "fixAvailable": true
+    },
+    "babel-plugin-istanbul": {
+      "name": "babel-plugin-istanbul",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@istanbuljs/load-nyc-config"
+      ],
+      "effects": [
+        "@jest/transform",
+        "babel-jest"
+      ],
+      "range": ">=6.0.0-beta.0",
+      "nodes": [
+        "node_modules/babel-plugin-istanbul"
+      ],
+      "fixAvailable": {
+        "name": "jest",
+        "version": "25.0.0",
+        "isSemVerMajor": true
+      }
+    },
+    "braces": {
+      "name": "braces",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1240992,
+          "name": "braces",
+          "dependency": "braces",
+          "title": "braces vulnerable to stack-exhaustion denial of service through deeply nested patterns",
+          "url": "https://github.com/advisories/GHSA-vfj7-8cjw-p6xm",
+          "severity": "high",
+          "cwe": [
+            "CWE-674"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+          },
+          "range": "<=3.0.3"
+        }
+      ],
+      "effects": [
+        "chokidar"
+      ],
+      "range": "*",
+      "nodes": [
+        "node_modules/braces"
+      ],
+      "fixAvailable": {
+        "name": "nodemon",
+        "version": "1.14.10",
+        "isSemVerMajor": true
+      }
+    },
+    "chokidar": {
+      "name": "chokidar",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "braces"
+      ],
+      "effects": [
+        "nodemon"
+      ],
+      "range": "2.0.0 - 3.6.0",
+      "nodes": [
+        "node_modules/chokidar"
+      ],
+      "fixAvailable": {
+        "name": "nodemon",
+        "version": "1.14.10",
+        "isSemVerMajor": true
+      }
+    },
+    "deepmerge-ts": {
+      "name": "deepmerge-ts",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1145093,
+          "name": "deepmerge-ts",
+          "dependency": "deepmerge-ts",
+          "title": "DeepmergeTS has stack exhaustion when merging recursive object graphs",
+          "url": "https://github.com/advisories/GHSA-ggr8-5vv4-36mx",
+          "severity": "high",
+          "cwe": [
+            "CWE-674"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": "<8.0.0"
+        }
+      ],
+      "effects": [
+        "@prisma/config"
+      ],
+      "range": "<8.0.0",
+      "nodes": [
+        "node_modules/deepmerge-ts"
+      ],
+      "fixAvailable": true
+    },
+    "effect": {
+      "name": "effect",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1115356,
+          "name": "effect",
+          "dependency": "effect",
+          "title": "Effect `AsyncLocalStorage` context lost/contaminated inside Effect fibers under concurrent load with RPC",
+          "url": "https://github.com/advisories/GHSA-38f7-945m-qr2g",
+          "severity": "high",
+          "cwe": [
+            "CWE-362"
+          ],
+          "cvss": {
+            "score": 7.4,
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N"
+          },
+          "range": "<3.20.0"
+        }
+      ],
+      "effects": [
+        "@prisma/config"
+      ],
+      "range": "<3.20.0",
+      "nodes": [
+        "node_modules/effect"
+      ],
+      "fixAvailable": true
+    },
+    "express-xss-sanitizer": {
+      "name": "express-xss-sanitizer",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "sanitize-html"
+      ],
+      "effects": [],
+      "range": ">=1.1.2",
+      "nodes": [
+        "node_modules/express-xss-sanitizer"
+      ],
+      "fixAvailable": {
+        "name": "express-xss-sanitizer",
+        "version": "1.1.1",
+        "isSemVerMajor": true
+      }
+    },
+    "jest": {
+      "name": "jest",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "@jest/core",
+        "jest-cli"
+      ],
+      "effects": [],
+      "range": ">=25.1.0",
+      "nodes": [
+        "node_modules/jest"
+      ],
+      "fixAvailable": {
+        "name": "jest",
+        "version": "25.0.0",
+        "isSemVerMajor": true
+      }
+    },
+    "jest-circus": {
+      "name": "jest-circus",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@jest/expect",
+        "jest-runtime",
+        "jest-snapshot"
+      ],
+      "effects": [
+        "jest-config"
+      ],
+      "range": ">=25.2.4",
+      "nodes": [
+        "node_modules/jest-circus"
+      ],
+      "fixAvailable": true
+    },
+    "jest-cli": {
+      "name": "jest-cli",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@jest/core",
+        "jest-config"
+      ],
+      "effects": [],
+      "range": ">=25.1.0",
+      "nodes": [
+        "node_modules/jest-cli"
+      ],
+      "fixAvailable": true
+    },
+    "jest-config": {
+      "name": "jest-config",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "babel-jest",
+        "jest-circus",
+        "jest-runner"
+      ],
+      "effects": [],
+      "range": ">=25.1.0",
+      "nodes": [
+        "node_modules/jest-config"
+      ],
+      "fixAvailable": true
+    },
+    "jest-resolve-dependencies": {
+      "name": "jest-resolve-dependencies",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "jest-snapshot"
+      ],
+      "effects": [],
+      "range": ">=27.0.0-next.0",
+      "nodes": [
+        "node_modules/jest-resolve-dependencies"
+      ],
+      "fixAvailable": true
+    },
+    "jest-runner": {
+      "name": "jest-runner",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@jest/transform",
+        "jest-runtime"
+      ],
+      "effects": [
+        "@jest/core",
+        "jest-config"
+      ],
+      "range": ">=25.1.0",
+      "nodes": [
+        "node_modules/jest-runner"
+      ],
+      "fixAvailable": {
+        "name": "jest",
+        "version": "25.0.0",
+        "isSemVerMajor": true
+      }
+    },
+    "jest-runtime": {
+      "name": "jest-runtime",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@jest/globals",
+        "@jest/transform",
+        "jest-snapshot"
+      ],
+      "effects": [
+        "jest-circus",
+        "jest-runner"
+      ],
+      "range": ">=25.1.0",
+      "nodes": [
+        "node_modules/jest-runtime"
+      ],
+      "fixAvailable": {
+        "name": "jest",
+        "version": "25.0.0",
+        "isSemVerMajor": true
+      }
+    },
+    "jest-snapshot": {
+      "name": "jest-snapshot",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@jest/transform"
+      ],
+      "effects": [
+        "@jest/expect",
+        "jest-circus",
+        "jest-resolve-dependencies",
+        "jest-runtime"
+      ],
+      "range": ">=27.0.0-next.0",
+      "nodes": [
+        "node_modules/jest-snapshot"
+      ],
+      "fixAvailable": {
+        "name": "jest",
+        "version": "25.0.0",
+        "isSemVerMajor": true
+      }
+    },
+    "js-yaml": {
+      "name": "js-yaml",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "argparse"
+      ],
+      "effects": [
+        "@istanbuljs/load-nyc-config"
+      ],
+      "range": "3.2.7 - 3.15.2",
+      "nodes": [
+        "node_modules/@istanbuljs/load-nyc-config/node_modules/js-yaml"
+      ],
+      "fixAvailable": {
+        "name": "jest",
+        "version": "25.0.0",
+        "isSemVerMajor": true
+      }
+    },
+    "nodemon": {
+      "name": "nodemon",
+      "severity": "high",
+      "isDirect": true,
+      "via": [
+        "chokidar"
+      ],
+      "effects": [],
+      "range": "0.0.0-development || >=1.14.11",
+      "nodes": [
+        "node_modules/nodemon"
+      ],
+      "fixAvailable": {
+        "name": "nodemon",
+        "version": "1.14.10",
+        "isSemVerMajor": true
+      }
+    },
+    "prisma": {
+      "name": "prisma",
+      "severity": "high",
+      "isDirect": true,
+      "via": [
+        "@prisma/config"
+      ],
+      "effects": [],
+      "range": "6.13.0-dev.1 - 8.1.0-dev.4",
+      "nodes": [
+        "node_modules/prisma"
+      ],
+      "fixAvailable": true
+    },
+    "sanitize-html": {
+      "name": "sanitize-html",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1130629,
+          "name": "sanitize-html",
+          "dependency": "sanitize-html",
+          "title": "sanitize-html has incomplete URI scheme validation in that allows javascript: URIs through action, formaction, data, poster, and background attributes",
+          "url": "https://github.com/advisories/GHSA-vccv-cmxp-4j9h",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-79"
+          ],
+          "cvss": {
+            "score": 5.4,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N"
+          },
+          "range": ">=1.18.0 <=2.17.4"
+        },
+        {
+          "source": 1153195,
+          "name": "sanitize-html",
+          "dependency": "sanitize-html",
+          "title": "ApostropheCMS: Stored XSS via SVG SMIL URI-list scheme-policy bypass",
+          "url": "https://github.com/advisories/GHSA-g8qq-57p8-ggw5",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-79"
+          ],
+          "cvss": {
+            "score": 5.4,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N"
+          },
+          "range": ">=1.9.0 <=2.17.6"
+        },
+        {
+          "source": 1164821,
+          "name": "sanitize-html",
+          "dependency": "sanitize-html",
+          "title": "ApostropheCMS: Mutation-XSS / allowedTags bypass via literal `</textarea/>` solidus close",
+          "url": "https://github.com/advisories/GHSA-jxwj-j7wr-gfrw",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-79"
+          ],
+          "cvss": {
+            "score": 6.1,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+          },
+          "range": "<=2.17.5"
+        }
+      ],
+      "effects": [
+        "express-xss-sanitizer"
+      ],
+      "range": "<=2.17.6",
+      "nodes": [
+        "node_modules/sanitize-html"
+      ],
+      "fixAvailable": {
+        "name": "express-xss-sanitizer",
+        "version": "1.1.1",
+        "isSemVerMajor": true
+      }
+    },
+    "sprintf-js": {
+      "name": "sprintf-js",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1241202,
+          "name": "sprintf-js",
+          "dependency": "sprintf-js",
+          "title": "sprintf-js vulnerable to denial of service through unbounded precision specifiers",
+          "url": "https://github.com/advisories/GHSA-hp3w-g68c-fv3c",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-1284"
+          ],
+          "cvss": {
+            "score": 5.3,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
+          },
+          "range": "<=1.1.3"
+        }
+      ],
+      "effects": [
+        "argparse"
+      ],
+      "range": "*",
+      "nodes": [
+        "node_modules/sprintf-js"
+      ],
+      "fixAvailable": {
+        "name": "jest",
+        "version": "25.0.0",
+        "isSemVerMajor": true
+      }
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 21,
+      "high": 7,
+      "critical": 0,
+      "total": 28
+    },
+    "dependencies": {
+      "prod": 145,
+      "dev": 461,
+      "optional": 44,
+      "peer": 7,
+      "peerOptional": 0,
+      "total": 606
+    }
+  }
+}
