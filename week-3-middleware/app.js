@@ -30,6 +30,9 @@ app.use((req, res, next) => {
   next();
 });
 
+//Add Request Size Limiting
+app.use(express.json({ limit: "1mb" }));
+
 //Content-Type Validation
 app.use((req, res, next) => {
   if (
@@ -44,9 +47,6 @@ app.use((req, res, next) => {
 
   next();
 });
-
-//Add Request Size Limiting
-app.use(express.json({ limit: "1mb" }));
 
 // Assignment 3b and 3c ask you to add middleware in this file.
 // Static file middleware
