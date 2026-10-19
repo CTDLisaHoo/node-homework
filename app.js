@@ -33,9 +33,9 @@ app.get("/problem", (req, res, next) => {
   next(new Error("Something went wrong."));
 });
 
-app.use("/api", notFound);
+app.use(notFound);
 
-app.use("/api", errorHandler);
+app.use(errorHandler);
 
 const port = process.env.PORT || 3000;
 

@@ -69,6 +69,10 @@ app.use((req, res) => {
 
 //Error handler
 app.use((err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err);
+  }
+
   const statusCode = err.statusCode || 500;
 
   if (statusCode >= 400 && statusCode < 500) {
