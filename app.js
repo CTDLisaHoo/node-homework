@@ -1,5 +1,18 @@
+//app.js
+
 const express = require("express");
+
+const timeRouter = require("./routes/timeRoutes");
+const userRouter = require("./routes/userRoutes");
+const notFound = require("./middleware/not-found");
+const errorHandler = require("./middleware/error-handler");
+
 const app = express();
+
+// Initialize global variables
+global.user_id = null;
+global.users = [];
+global.tasks = [];
 
 app.use(express.json());
 
@@ -13,14 +26,16 @@ app.post("/testpost", (req, res) => {
   });
 });
 
-const timeRouter = require("./routes/timeRoutes");
 app.use("/api", timeRouter);
+app.use("/api/users", userRouter);
 
-app.all("/{*splat}", (req, res) => {
-  res.status(404).json({
-    message: `No route found for ${req.method} ${req.path}`,
-  });
+app.get("/problem", (req, res, next) => {
+  next(new Error("Something went wrong."));
 });
+
+app.use(notFound);
+
+app.use(errorHandler);
 
 const port = process.env.PORT || 3000;
 
@@ -37,8 +52,6 @@ const server = app.listen(port, (error) => {
 
   console.log(`Server is listening on port ${port}...`);
 });
-
-module.exports = { app, server };
 
 let isShuttingDown = false;
 
@@ -66,3 +79,5 @@ async function shutdown(code = 0) {
 
 process.on("SIGINT", () => shutdown(0));
 process.on("SIGTERM", () => shutdown(0));
+
+module.exports = { app, server };
