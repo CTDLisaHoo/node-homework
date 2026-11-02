@@ -1,0 +1,15 @@
+$kind: http-request
+name: http://localhost:3000/api/tasks/1
+url: http://localhost:3000/api/tasks/1
+method: PATCH
+body:
+  type: json
+  content: "{\r
+
+    \  \"title\": \"Assignment 5 Updated\",\r
+
+    \  \"isCompleted\": true\r
+
+    }"
+settings: {}
+order: 7000
