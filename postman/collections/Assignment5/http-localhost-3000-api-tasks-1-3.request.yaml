@@ -1,0 +1,15 @@
+$kind: http-request
+name: http://localhost:3000/api/tasks/1
+url: http://localhost:3000/api/tasks/1
+method: PATCH
+body:
+  type: json
+  content: "{\r
+
+    \  \"title\": \"User 2 changed task\",\r
+
+    \  \"isCompleted\": true\r
+
+    }"
+settings: {}
+order: 12000
