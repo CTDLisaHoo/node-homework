@@ -9,6 +9,8 @@ package-lock.json
 # Environment Variables
 # ===========================================
 .env
+.env.*
+!.env.example
 
 # ===========================================
 # Database
@@ -16,7 +18,16 @@ package-lock.json
 /generated/prisma
 
 # ===========================================
+# Postman
+# ===========================================
+# Keep shareable collections in GitHub.
+# Ignore private environments and local settings if present.
+postman/environments/private*.json
+
+# ===========================================
 # macOS System Files
 # ===========================================
 .DS_Store
 .DS_Store?
+
+/generated/prisma
