@@ -5,10 +5,12 @@ const express = require("express");
 
 const timeRouter = require("./routes/timeRoutes");
 const userRouter = require("./routes/userRoutes");
+const taskRouter = require("./routes/taskRoutes");
+const analyticsRouter = require("./routes/analyticsRoutes");
+
 const notFound = require("./middleware/not-found");
 const errorHandler = require("./middleware/error-handler");
 const authMiddleware = require("./middleware/auth");
-const taskRouter = require("./routes/taskRoutes");
 
 const app = express();
 
@@ -41,6 +43,7 @@ app.post("/testpost", (req, res) => {
 app.use("/api", timeRouter);
 app.use("/api/users", userRouter);
 app.use("/api/tasks", authMiddleware, taskRouter);
+app.use("/api/analytics", authMiddleware, analyticsRouter);
 
 app.get("/problem", (req, res, next) => {
   next(new Error("Something went wrong."));
