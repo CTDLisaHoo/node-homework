@@ -47,38 +47,89 @@ const register = async (req, res, next) => {
 
   const { name, email, hashedPassword } = value;
 
-  let user = null;
   try {
-    user = await prisma.user.create({
-      data: { name, email, hashedPassword },
-      select: { name: true, email: true, id: true } // specify the column values to return
-    });
-  } catch (err) {
-    if (err.name === "PrismaClientKnownRequestError" && err.code === "P2002") {
-      return res.status(400).json({
-        message: "Email already registered",
+    const result = await prisma.$transaction(async (tx) => {
+      // Create user account (similar to Assignment 6, but using tx instead of prisma)
+      const newUser = await tx.user.create({
+        data: { email, name, hashedPassword },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          createdAt: true
+        }
       });
+
+      // Create 3 welcome tasks using createMany
+      const welcomeTaskData = [
+        { title: "Complete your profile", userId: newUser.id, priority: "medium" },
+        { title: "Add your first task", userId: newUser.id, priority: "high" },
+        { title: "Explore the app", userId: newUser.id, priority: "low" }
+      ];
+      await tx.task.createMany({ data: welcomeTaskData });
+
+      // Fetch the created tasks to return them
+      const welcomeTasks = await tx.task.findMany({
+        where: {
+          userId: newUser.id,
+          title: { in: welcomeTaskData.map(t => t.title) }
+        },
+        select: {
+          id: true,
+          title: true,
+          isCompleted: true,
+          userId: true,
+          priority: true
+        }
+      });
+
+      return { user: newUser, welcomeTasks };
+    });
+
+    // Store the user ID globally for session management (not secure for production)
+    global.user_id = result.user.id;
+
+    // Send response with status 201
+    res.status(201);
+    res.json({
+      user: result.user,
+      welcomeTasks: result.welcomeTasks,
+      transactionStatus: "success"
+    });
+    return;
+  } catch (err) {
+    if (err.code === "P2002") {
+      // send the appropriate error back -- the email was already registered
+      return res.status(400).json({ error: "Email already registered" });
     } else {
-      return next(err);
+      return next(err); // the error handler takes care of other errors
     }
   }
-
-  global.user_id = user.id;
-
-  res.status(201).json({
-    name: user.name,
-    email: user.email,
-  });
 };
 
 const logon = async (req, res, next) => {
   try {
     const { email, password } = req.body || {};
 
+    if (
+      typeof email !== "string" ||
+      typeof password !== "string"
+    ) {
+      return res.status(400).json({
+        message: "Email and password are required"
+      });
+    }
+
     const normalizedEmail = email.toLowerCase();
 
     const user = await prisma.user.findUnique({
-      where: { email: normalizedEmail }
+      where: { email: normalizedEmail },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        hashedPassword: true
+      }
     });
 
     const goodCredentials =
@@ -107,8 +158,68 @@ const logoff = (req, res) => {
   res.status(200).json({ message: 'User logged off successfully' });
 };
 
+const show = async (req, res, next) => {
+  try {
+    const userId = global.user_id;
+
+    if (isNaN(userId)) {
+      return res.status(400).json({
+        error: "Invalid user ID"
+      });
+    }
+
+    if (userId !== global.user_id) {
+      return res.status(403).json({
+        error: "Forbidden"
+      });
+    }
+
+    const allowedFields = ["id", "name", "email", "createdAt"];
+
+    let selectedFields = allowedFields;
+
+    if (req.query.fields) {
+      selectedFields = req.query.fields
+        .split(",")
+        .map(field => field.trim())
+        .filter(field => allowedFields.includes(field));
+
+      if (selectedFields.length === 0) {
+        return res.status(400).json({
+          error: "Invalid fields requested"
+        });
+      }
+    }
+
+    const select = {};
+
+    selectedFields.forEach(field => {
+      select[field] = true;
+    });
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select
+    });
+
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found"
+      });
+    }
+
+    return res.status(200).json(user);
+
+  } catch (err) {
+    next(err);
+  }
+};
+
+
 module.exports = {
   register,
   logon,
   logoff,
+  show,
 };
