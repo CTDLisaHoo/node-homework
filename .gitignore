@@ -24,6 +24,9 @@ package-lock.json
 # Ignore private environments and local settings if present.
 postman/environments/private*.json
 
+.postman/
+postman/collections/Assignment5/
+
 # ===========================================
 # macOS System Files
 # ===========================================
