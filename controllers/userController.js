@@ -18,18 +18,9 @@ const cookieFlags = (req) => {
 };
 
 const setJwtCookie = (req, res, user) => {
-
-  console.log("Creating JWT for user ID:", user.id);
-  console.log("New CSRF token generated");
-
   // Sign JWT
   const payload = { id: user.id, csrfToken: randomUUID() };
   const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" }); // 1 hour expiration
-
-  console.log(
-    "JWT fingerprint:",
-    crypto.createHash("sha256").update(token).digest("hex").slice(0, 12)
-  );
   // Set cookie.  Note that the cookie flags have to be different in production and in test.
   res.cookie("jwt", token, { ...cookieFlags(req), maxAge: 3600000 }); // 1 hour expiration
   return payload.csrfToken; // this is needed in the body returned by logon() or register()
