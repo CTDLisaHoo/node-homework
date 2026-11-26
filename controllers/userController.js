@@ -4,8 +4,27 @@ const { userSchema } = require("../validation/userSchema");
 const crypto = require("crypto");
 const util = require("util");
 const prisma = require("../db/prisma");
+const { randomUUID } = require("crypto");
+const jwt = require("jsonwebtoken");
 
 const scrypt = util.promisify(crypto.scrypt);
+
+const cookieFlags = (req) => {
+  return {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production", // only when HTTPS is available
+    sameSite: "Strict",
+  };
+};
+
+const setJwtCookie = (req, res, user) => {
+  // Sign JWT
+  const payload = { id: user.id, csrfToken: randomUUID() };
+  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" }); // 1 hour expiration
+  // Set cookie.  Note that the cookie flags have to be different in production and in test.
+  res.cookie("jwt", token, { ...cookieFlags(req), maxAge: 3600000 }); // 1 hour expiration
+  return payload.csrfToken; // this is needed in the body returned by logon() or register()
+};
 
 const hashPassword = async (password) => {
   const salt = crypto.randomBytes(16).toString("hex");
@@ -45,7 +64,8 @@ const register = async (req, res, next) => {
 
   delete value.password;
 
-  const { name, email, hashedPassword } = value;
+  const { name, hashedPassword } = value;
+  const email = value.email.toLowerCase().trim();
 
   try {
     const result = await prisma.$transaction(async (tx) => {
@@ -86,17 +106,19 @@ const register = async (req, res, next) => {
       return { user: newUser, welcomeTasks };
     });
 
-    // Store the user ID globally for session management (not secure for production)
-    global.user_id = result.user.id;
+    // Set JWT cookie and generate CSRF token
+    const csrfToken = setJwtCookie(req, res, result.user);
 
     // Send response with status 201
-    res.status(201);
-    res.json({
-      user: result.user,
+    return res.status(201).json({
+      user: {
+        name: result.user.name,
+        email: result.user.email,
+      },
+      csrfToken,
       welcomeTasks: result.welcomeTasks,
-      transactionStatus: "success"
+      transactionStatus: "success",
     });
-    return;
   } catch (err) {
     if (err.code === "P2002") {
       // send the appropriate error back -- the email was already registered
@@ -141,36 +163,34 @@ const logon = async (req, res, next) => {
       });
     }
 
-    global.user_id = user.id;
+    // Set JWT cookie and generate CSRF token
+    const csrfToken = setJwtCookie(req, res, user);
 
-    res.status(200).json({
+    // Send response with status 201
+    return res.status(200).json({
       name: user.name,
       email: user.email,
+      csrfToken,
     });
+
   } catch (err) {
     next(err);
   }
 };
 
 const logoff = (req, res) => {
-  global.user_id = null;
+  res.clearCookie("jwt", cookieFlags(req));
 
   res.status(200).json({ message: 'User logged off successfully' });
 };
 
 const show = async (req, res, next) => {
   try {
-    const userId = global.user_id;
+    const userId = req.user.id;
 
-    if (isNaN(userId)) {
+    if (!Number.isInteger(userId)) {
       return res.status(400).json({
         error: "Invalid user ID"
-      });
-    }
-
-    if (userId !== global.user_id) {
-      return res.status(403).json({
-        error: "Forbidden"
       });
     }
 
@@ -216,10 +236,11 @@ const show = async (req, res, next) => {
   }
 };
 
-
 module.exports = {
   register,
   logon,
   logoff,
   show,
+  cookieFlags,
+  setJwtCookie,
 };

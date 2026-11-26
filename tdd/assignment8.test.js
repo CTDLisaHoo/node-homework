@@ -1,3 +1,7 @@
+jest.mock("express-xss-sanitizer", () => ({
+  xss: () => (_req, _res, next) => next(),
+}));
+
 require("dotenv").config();
 process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
 const prisma = require("../db/prisma");

@@ -5,10 +5,8 @@ const prisma = require("../db/prisma");
 
 const create = async (req, res, next) => {
     try {
-        if (!global.user_id) {
-            return res.status(401).json({
-                message: "Unauthorized",
-            });
+        if (!req.user) {
+            throw new TypeError("User ID is required");
         }
 
         if (!req.body) req.body = {};
@@ -28,7 +26,7 @@ const create = async (req, res, next) => {
                 title: value.title,
                 isCompleted: value.isCompleted,
                 priority: value.priority,
-                userId: global.user_id,
+                userId: req.user.id,
             },
             select: {
                 id: true,
@@ -49,7 +47,7 @@ const create = async (req, res, next) => {
 const bulkCreate = async (req, res, next) => {
 
     // Check authentication
-    if (!global.user_id) {
+    if (!req.user || !req.user.id) {
         return res.status(401).json({
             message: "Unauthorized",
         });
@@ -78,7 +76,7 @@ const bulkCreate = async (req, res, next) => {
             title: value.title,
             isCompleted: value.isCompleted || false,
             priority: value.priority || 'medium',
-            userId: global.user_id
+            userId : req.user.id
         });
     }
 
@@ -100,7 +98,7 @@ const bulkCreate = async (req, res, next) => {
 };
 
 const index = async (req, res, next) => {
-    if (!global.user_id) {
+    if (!req.user || !req.user.id) {
         return res.status(401).json({
             message: "Unauthorized",
         });
@@ -117,7 +115,7 @@ const index = async (req, res, next) => {
 
         // Build where clause with optional search filter
         const whereClause = {
-            userId: global.user_id
+            userId: req.user.id
         };
 
         if (req.query.find) {
@@ -194,7 +192,7 @@ const index = async (req, res, next) => {
 
 const show = async (req, res, next) => {
     try {
-        if (!global.user_id) {
+        if (!req.user || !req.user.id) {
             return res.status(401).json({
                 message: "Unauthorized",
             });
@@ -211,7 +209,7 @@ const show = async (req, res, next) => {
         const task = await prisma.task.findUnique({
             where: {
                 id: taskId,
-                userId: global.user_id,
+                userId: req.user.id,
             },
             select: {
                 id: true,
@@ -241,7 +239,7 @@ const show = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
-        if (!global.user_id) {
+        if (!req.user || !req.user.id) {
             return res.status(401).json({
                 message: "Unauthorized",
             });
@@ -271,7 +269,7 @@ const update = async (req, res, next) => {
             data: value,
             where: {
                 id,
-                userId: global.user_id,
+                userId: req.user.id,
             },
             select: {
                 title: true,
@@ -296,7 +294,7 @@ const update = async (req, res, next) => {
 
 const deleteTask = async (req, res, next) => {
     try {
-        if (!global.user_id) {
+        if (!req.user || !req.user.id) {
             return res.status(401).json({
                 message: "Unauthorized",
             });
@@ -313,7 +311,7 @@ const deleteTask = async (req, res, next) => {
         const deletedTask = await prisma.task.delete({
             where: {
                 id,
-                userId: global.user_id,
+                userId: req.user.id,
             },
             select: {
                 id: true,
